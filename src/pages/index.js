@@ -4,6 +4,7 @@ import './styles.css'
 import Header from '../components/Header'
 import Hero from '../components/Hero'
 import Table from '../components/Table'
+import Calc from '../components/Calc'
 import Footer from '../components/Footer'
 
 const Index = () => (
@@ -11,7 +12,7 @@ const Index = () => (
         <Header />
         <Hero />
         <Table />
-        <h1>TEste</h1>
+        <Calc />
         <Footer />
     </div>
 )
