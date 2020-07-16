@@ -7,6 +7,14 @@ module.exports = {
                 printRejected: true,
                 tailwind: true
             }
+        },
+        {
+            resolve: "gatsby-plugin-react-svg",
+            options: {
+                rule: {
+                    include: /assets/
+                }
+            }
         }
     ]
 }
