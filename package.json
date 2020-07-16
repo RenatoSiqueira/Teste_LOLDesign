@@ -1,0 +1,21 @@
+{
+  "name": "test_lol",
+  "version": "1.0.0",
+  "description": "Test LolDesign",
+  "main": "index.js",
+  "author": "Renato Siqueira",
+  "scripts": {
+    "dev": "gatsby develop",
+    "build": "gatsby build"
+  },
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "gatsby": "^2.24.3",
+    "gatsby-plugin-postcss": "^2.3.11",
+    "gatsby-plugin-purgecss": "^5.0.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "tailwindcss": "^1.5.1"
+  }
+}
