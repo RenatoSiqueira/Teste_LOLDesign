@@ -5,7 +5,7 @@
   "main": "index.js",
   "author": "Renato Siqueira",
   "scripts": {
-    "dev": "gatsby develop",
+    "develop": "gatsby develop",
     "build": "gatsby build"
   },
   "license": "MIT",
