@@ -31,13 +31,31 @@ const FixedValue = {
     '1811': 1.90
 }
 
+const Plans = [
+    {
+        icon: 'statue-of-liberty.png',
+        title: 'FaleMais 30',
+        text: 'Muito mais liberdade para falar! O Plano FaleMais 30 lhe proporciona tranquilidade em ligações à distância.'
+    },
+    {
+        icon: '25-de-abril-bridge.png',
+        title: 'FaleMais 60',
+        text: 'A ponte que faltava para comunicar com seus clientes ou filiais com muito mais comodidade. FaleMais 60 é o plano ideal para alavancar suas vendas.'
+    },
+    {
+        icon: 'island-on-water.png',
+        title: 'FaleMais 120',
+        text: 'Tranquilidade total! O Fale Mais 120 garante conforto para ligações que necessitam de atenção diferenciada.'
+    }
+]
+
 const Index = () => (
     <div className="font-sans leading-normal tracking-normal">
         <Helmet>
             <title>FaleMais, Fale muuuuuuito mais!</title>
         </Helmet>
         <Header />
-        <Hero />
+        <Hero data={Plans} />
         <Calc data={FixedValue} />
         <Pricing data={mockTableItems} />
         <Testimonials />

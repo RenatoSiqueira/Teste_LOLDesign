@@ -1,36 +1,5 @@
 import React, { useState, useEffect } from 'react'
-
-const ResultTable = ({ data }) => {
-    return (
-        <div className="lg:w-2/3 w-full mx-auto overflow-auto">
-            <table className="table-auto w-full text-left whitespace-no-wrap">
-                <thead>
-                    <tr className='text-center'>
-                        {/* <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200">Origem</th> */}
-                        {/* <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200">Destino</th> */}
-                        {/* <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200">Tempo</th> */}
-                        <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200">Plano FaleMais</th>
-                        <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200 font-bold">Com FaleMais</th>
-                        <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200 font-bold">Sem FaleMais</th>
-                        <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-200 font-bold">Economize</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr className='bg-gray-100 text-center'>
-                        {/* <td className="px-4 py-3">0{data.origin}</td> */}
-                        {/* <td className="px-4 py-3">0{data.dest}</td> */}
-                        {/* <td className="px-4 py-3">{data.time}</td> */}
-                        <td className="px-4 py-3">FaleMais {data.plan}</td>
-                        <td className="px-4 py-3">R$ {data.priceWith}</td>
-                        <td className="px-4 py-3">R$ {data.priceWithout}</td>
-                        <td className="px-4 py-3">R$ {data.savings}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    )
-}
-
+import ResultTable from './resultTable'
 
 const Calc = ({ data }) => {
     const [exists, setExists] = useState(true)
@@ -39,28 +8,35 @@ const Calc = ({ data }) => {
 
     const handleChange = e => {
         const { name, value } = e.target
-        setParams({ ...params, [name]: parseInt(value) })
+        setParams({
+            ...params,
+            [name]: (!!value && value > -1) ? parseInt(value) : 0
+        })
     }
 
     const CostCalc = () => {
         const { origin, dest, time, plan } = params
         const index = origin + dest.toString()
         const price = data[index]
+
         if (!price) {
             setExists(false)
-        } else {
-            const priceWithout = (price * time).toFixed(2)
-            let priceWith = 0
-            let savings = priceWithout
-            if (time > plan) {
-                const surplus = time - plan
-                const extraCost = price + (price * 10 / 100)
-                priceWith = (surplus * extraCost).toFixed(2)
-                savings = (priceWithout - priceWith).toFixed(2)
-            }
-            setResult({ ...params, priceWith, priceWithout, savings })
-            setExists(true)
+            return
         }
+
+        const priceWithout = (price * time).toFixed(2)
+        let priceWith = 0
+        let savings = priceWithout
+
+        if (time > plan) {
+            const surplus = time - plan
+            const extraCost = price + (price * 10 / 100)
+            priceWith = (surplus * extraCost).toFixed(2)
+            savings = (priceWithout - priceWith).toFixed(2)
+        }
+
+        setResult({ ...params, priceWith, priceWithout, savings })
+        setExists(true)
     }
 
     useEffect(() => {
@@ -69,12 +45,12 @@ const Calc = ({ data }) => {
 
     return (
         <section id="calculadora" className="text-gray-700 body-font bg-gray-400">
-            <div className="container px-5 py-16 mx-auto">
+            <div className="container px-5 md:px-1 py-16 mx-auto">
                 <div className="flex flex-col text-center w-full mb-12">
                     <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Calculadora</h1>
                     <p className="lg:w-2/3 mx-auto leading-relaxed text-base">Quer saber quanto será sua economia? Veja na Calculadora <strong>FaleMais</strong> e se surpreenda!</p>
                 </div>
-                <div className="flex lg:w-2/3 w-full sm:flex-row flex-col mx-auto px-8 sm:px-0 justify-around text-center">
+                <div className="flex w-full flex-col lg:flex-row text-center justify-between xl:w-2/3 lg:mx-auto">
                     <div className="relative">
                         <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="origin">
                             Origem
@@ -117,10 +93,11 @@ const Calc = ({ data }) => {
                             type="number"
                             id="time"
                             name="time"
+                            min="0"
                             onChange={handleChange}
                         />
                     </div>
-                    <div className="relative">
+                    <div className="relative ">
                         <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="dest">
                             Plano
                         </label>
@@ -144,6 +121,7 @@ const Calc = ({ data }) => {
                     }
                     {
                         !exists &&
+                        params.priceWithout !== 0 &&
                         <div className="flex flex-col text-center w-full mb-12">
                             <p className="lg:w-2/3 mx-auto leading-relaxed text-base">Sem Tarifa Cadastrada</p>
                         </div>
