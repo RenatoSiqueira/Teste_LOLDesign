@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import ResultTable from './resultTable'
+import ResultTable from './ResultTable'
+
+import CalcMethod from './lib'
 
 const Calc = ({ data }) => {
     const [exists, setExists] = useState(true)
@@ -14,33 +16,14 @@ const Calc = ({ data }) => {
         })
     }
 
-    const CostCalc = () => {
-        const { origin, dest, time, plan } = params
-        const index = origin + dest.toString()
-        const price = data[index]
-
-        if (!price) {
+    useEffect(() => {
+        const [status, results] = CalcMethod(data, params)
+        if (!status) {
             setExists(false)
             return
         }
-
-        const priceWithout = (price * time).toFixed(2)
-        let priceWith = 0
-        let savings = priceWithout
-
-        if (time > plan) {
-            const surplus = time - plan
-            const extraCost = price + (price * 10 / 100)
-            priceWith = (surplus * extraCost).toFixed(2)
-            savings = (priceWithout - priceWith).toFixed(2)
-        }
-
-        setResult({ ...params, priceWith, priceWithout, savings })
+        setResult(results)
         setExists(true)
-    }
-
-    useEffect(() => {
-        CostCalc()
     }, [params])
 
     return (
@@ -78,7 +61,7 @@ const Calc = ({ data }) => {
                             onChange={handleChange}
                         >
                             <option value='11'>(011) - São Paulo</option>
-                            <option value='16'>(016) - São Paulo</option>
+                            <option value='16' selected>(016) - São Paulo</option>
                             <option value='17'>(017) - São Paulo</option>
                             <option value='18'>(018) - São Paulo</option>
                         </select>

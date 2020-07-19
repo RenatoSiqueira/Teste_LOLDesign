@@ -6,7 +6,9 @@
   "author": "Renato Siqueira",
   "scripts": {
     "develop": "gatsby develop",
-    "build": "gatsby build"
+    "build": "gatsby build",
+    "serve": "gatsby serve",
+    "test": "jest -u"
   },
   "license": "MIT",
   "private": true,
@@ -20,5 +22,12 @@
     "react-dom": "^16.13.1",
     "react-helmet": "^6.1.0",
     "tailwindcss": "^1.5.1"
+  },
+  "devDependencies": {
+    "babel-jest": "^26.1.0",
+    "babel-preset-gatsby": "^0.5.2",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^26.1.0",
+    "react-test-renderer": "^16.13.1"
   }
 }
