@@ -22,6 +22,15 @@ const mockTableItems = [
     { plan: 'FaleMais 120', orig: '017', dest: '011', time: '2 Horas', price: 0 },
 ]
 
+const FixedValue = {
+    '1116': 1.90,
+    '1611': 2.90,
+    '1117': 1.70,
+    '1711': 2.70,
+    '1118': 0.90,
+    '1811': 1.90
+}
+
 const Index = () => (
     <div className="font-sans leading-normal tracking-normal">
         <Helmet>
@@ -29,7 +38,7 @@ const Index = () => (
         </Helmet>
         <Header />
         <Hero />
-        <Calc />
+        <Calc data={FixedValue} />
         <Pricing data={mockTableItems} />
         <Testimonials />
         <CTA />
